@@ -24,7 +24,8 @@ $stmt->execute() ;
 $count = $stmt -> rowCount();
 
 if ($count > 0) {
-    echo     json_encode(array("status" => "success"));
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo     json_encode(array("status" => "success","student" => $user));
 } else {
     echo     json_encode(array("status" => "failure"));
 }
