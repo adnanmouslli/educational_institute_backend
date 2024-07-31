@@ -1,6 +1,6 @@
 <?php
 
-$dsn = "mysql:host=localhost;dbname=mall";
+$dsn = "mysql:host=localhost;dbname=educational_institute";
 $user = "root" ;
 $pass = "" ;
 $option = array(
@@ -13,7 +13,7 @@ try {
    header("Access-Control-Allow-Origin: *");
    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Origin");
    header("Access-Control-Allow-Methods: POST, OPTIONS , GET");
-   include "functions.php" ;
+   // include "../lib/functions.php" ;
    // if (!isset($notAuth)) {
    //    checkAuthenticate();
    // }
