@@ -125,7 +125,7 @@ function deleteData($table, $where, $json = true)
     return $count;
 }
 
-function imageUpload( $imageRequest , $imageUrl)
+function fileUpload( $imageRequest , $imageUrl)
 {
 
     $ipGlobal = "localhost" ;
@@ -148,7 +148,13 @@ function imageUpload( $imageRequest , $imageUrl)
         }
         if (empty($msgError)) {
             move_uploaded_file($imagetmp,  $imageUrl . $imagename);
-            return $ipGlobal . "/educational_institute/upload/" . $imagename ;
+            if($imageRequest == "image")
+             return $ipGlobal . "/educational_institute/upload-Image/" . $imagename ;
+            else if($imageRequest == "filePdf")
+             return $ipGlobal . "/educational_institute/upload-pdf/" . $imagename ;
+
+
+
         } else {
             return "fail";
         }

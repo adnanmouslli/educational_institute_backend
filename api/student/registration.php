@@ -5,7 +5,7 @@ include "../../lib/functions.php" ;
 // include "../../lib/getJsonData.php" ;
 
 
-$dir_uploads = "C:/xampp/htdocs/educational_institute/uploads/" ;
+$dir_uploads = "C:/xampp/htdocs/educational_institute/upload-Image/" ;
 
 $full_name = $_POST['full_name'];
 $username = $_POST['username'];
@@ -14,7 +14,7 @@ $school = $_POST['school'];
 $phone = $_POST['phone'];
 $gender = $_POST['gender'];
 $class = $_POST['class'];
-$id_image_url = imageUpload("image" , $dir_uploads) ;
+$id_image_url = fileUpload("image" , $dir_uploads) ;
 
 $sub_url = explode("/" , $id_image_url) ;
 
