@@ -1,29 +1,22 @@
 <?php
 
 include "../../database/connect.php" ;
+include "../../lib/functions.php" ;
+// include "../../lib/getJsonData.php" ;
 
-header('Content-Type: application/json');
 
-$inputJSON = file_get_contents('php://input');
+$dir_uploads = "C:/xampp/htdocs/educational_institute/uploads/" ;
 
-$input = json_decode($inputJSON, true);
+$full_name = $_POST['full_name'];
+$username = $_POST['username'];
+$password = $_POST['password'];
+$school = $_POST['school'];
+$phone = $_POST['phone'];
+$gender = $_POST['gender'];
+$class = $_POST['class'];
+$id_image_url = imageUpload("image" , $dir_uploads) ;
 
-if (json_last_error() !== JSON_ERROR_NONE) {
-
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid JSON']);
-    exit;
-}
-
-$full_name = $input['full_name'];
-$username = $input['username'];
-$password = $input['password'];
-$school = $input['school'];
-$phone = $input['phone'];
-$gender = $input['gender'];
-$class = $input['class'];
-$id_image_url = $input['id_image_url'];
-
+$sub_url = explode("/" , $id_image_url) ;
 
 $stmt = $con -> prepare("SELECT * FROM `students` WHERE phone = '$phone';");
 
@@ -32,9 +25,9 @@ $count = $stmt -> rowCount();
 
 if ($count > 0) {
     echo     json_encode(array("status" => "failure" , "message" => "Phone number already exists"));
+    deleteFile($dir_uploads . $sub_url[sizeof($sub_url) - 1]) ;
     exit ;
 } 
-
 
 $studentNumber = '';
 if ($class === 'T') {
@@ -55,10 +48,10 @@ $stmt = $con -> prepare("INSERT INTO
 $stmt->execute() ;
 $count = $stmt -> rowCount();
 
+
 if ($count > 0) {
-    echo     json_encode(array("status" => "success"));
+    printSuccess();
 } else {
-    echo     json_encode(array("status" => "failure"));
+    printFailure();
+    deleteFile($dir_uploads . $sub_url[3]) ;
 }
-
-
