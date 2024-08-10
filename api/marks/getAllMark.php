@@ -11,7 +11,7 @@ $id_student = $input['id_student'];
 
 
 $stmt = $con->prepare("
-    SELECT m.mark, sub.name AS subject_name, sp.name AS supervisor_name
+    SELECT m.mark,m.date, sub.name AS subject_name, sp.name AS supervisor_name
     FROM marks m
     INNER JOIN subject sub ON m.id_subject = sub.id
     INNER JOIN supervisors sp ON m.id_supervisor = sp.id
