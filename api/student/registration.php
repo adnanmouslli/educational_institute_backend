@@ -14,6 +14,7 @@ $school = $_POST['school'];
 $phone = $_POST['phone'];
 $gender = $_POST['gender'];
 $class = $_POST['class'];
+$id_section = $_POST['id_section'];
 $id_image_url = fileUpload("image" , $dir_uploads) ;
 
 $sub_url = explode("/" , $id_image_url) ;
@@ -23,12 +24,15 @@ $stmt = $con -> prepare("SELECT * FROM `students` WHERE phone = '$phone';");
 $stmt->execute() ;
 $count = $stmt -> rowCount();
 
+
 if ($count > 0) {
     echo     json_encode(array("status" => "failure" , "message" => "Phone number already exists"));
     deleteFile($dir_uploads . $sub_url[sizeof($sub_url) - 1]) ;
     exit ;
 } 
 
+
+// add student
 $studentNumber = '';
 if ($class === 'T') {
     $studentNumber = 'TA-'; // رمز للصف التاسع
@@ -37,19 +41,20 @@ if ($class === 'T') {
 }
 
 $unique_number = mt_rand(10000, 99999);
-
 $studentNumber = $studentNumber . $unique_number;
 
-
 $stmt = $con -> prepare("INSERT INTO 
-`students`(`id`, `full_name`, `username`, `password`, `school`, `phone`, `gender`, `class`, `id_image_url` , `studentNumber`) 
-    VALUES (null , '$full_name' , '$username' , '$password' , '$school' ,'$phone' , '$gender' , '$class' , '$id_image_url' , '$studentNumber')");
+`students`(`id`, `full_name`, `username`, `password`, `school`, `phone`, `gender`, `class`, `image_url` , `studentNumber` , `id_section`) 
+    VALUES (null , '$full_name' , '$username' , '$password' , '$school' ,'$phone' , '$gender' , '$class' , '$id_image_url' , '$studentNumber' , '$id_section')");
 
 $stmt->execute() ;
 $count = $stmt -> rowCount();
 
-
 if ($count > 0) {
+
+    $stmt = $con -> prepare("UPDATE `section` SET `number-students` = `number-students` + 1  WHERE id = '$id_section' ");
+    $stmt->execute();
+
     printSuccess();
 } else {
     printFailure();

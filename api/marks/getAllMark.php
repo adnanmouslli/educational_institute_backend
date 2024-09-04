@@ -6,7 +6,6 @@ include "../../lib/getJsonData.php" ;
 
 include "../../lib/functions.php" ;
 
-
 $id_student = $input['id_student'];
 
 
