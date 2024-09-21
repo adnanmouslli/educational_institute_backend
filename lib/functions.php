@@ -156,7 +156,7 @@ function fileUpload( $imageRequest , $imageUrl)
 
 
         } else {
-            return "fail";
+                return "fail";
         }
     }else {
         return 'empty' ; 
@@ -210,9 +210,6 @@ function result($count)
 
 function sendEmail($to, $title, $body)
 {
-    $header = "From: support@waelabohamza.com " . "\n" . "CC: waeleagle1243@gmail.com";
+        $header = "From: support@waelabohamza.com " . "\n" . "CC: waeleagle1243@gmail.com";
     mail($to, $title, $body, $header);
 }
-
-
-

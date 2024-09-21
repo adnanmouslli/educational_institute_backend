@@ -15,15 +15,15 @@ $phone = $_POST['phone'];
 $gender = $_POST['gender'];
 $class = $_POST['class'];
 $id_section = $_POST['id_section'];
+
 $id_image_url = fileUpload("image" , $dir_uploads) ;
 
-$sub_url = explode("/" , $id_image_url) ;
+$sub_url = explode("/" , $id_image_url);
 
 $stmt = $con -> prepare("SELECT * FROM `students` WHERE phone = '$phone';");
 
 $stmt->execute() ;
 $count = $stmt -> rowCount();
-
 
 if ($count > 0) {
     echo     json_encode(array("status" => "failure" , "message" => "Phone number already exists"));
@@ -31,13 +31,12 @@ if ($count > 0) {
     exit ;
 } 
 
-
 // add student
 $studentNumber = '';
-if ($class === 'T') {
+if ($class === 'تاسع') {
     $studentNumber = 'TA-'; // رمز للصف التاسع
-} elseif ($class === 'B') {
-    $studentNumber = 'BA-'; // رمز للبكالوريا
+} elseif ($class === 'بكلوريا') {
+    $studentNumber = 'BA-'; // رمز للبكالوريا   
 }
 
 $unique_number = mt_rand(10000, 99999);
@@ -57,6 +56,6 @@ if ($count > 0) {
 
     printSuccess();
 } else {
-    printFailure();
-    deleteFile($dir_uploads . $sub_url[3]) ;
+             printFailure();
+             deleteFile($dir_uploads . $sub_url[3]) ;
 }

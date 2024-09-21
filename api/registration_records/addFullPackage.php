@@ -20,7 +20,5 @@ foreach($listIdSubjects as $id_sub) {
     $stmt ->execute() ;
 
 }
-
 $count  = $stmt ->rowCount() ;
-
 result($count) ;

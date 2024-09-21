@@ -8,7 +8,7 @@ include "../../lib/functions.php" ;
 $titlePdf = $_POST['title'];
 $id_supervisor = $_POST['id_supervisor'];
 $description = $_POST['description'];
-$class = $_POST['class']; // $class = 0 if 'تاسع' or $class = 1 if 'بكلوريا'
+$class = $_POST['class'];
 
 $dir_uploads = "C:/xampp/htdocs/educational_institute/upload-pdf/" ;
 $urlFile = fileUpload("filePdf" , $dir_uploads) ;
