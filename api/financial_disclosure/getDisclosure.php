@@ -8,7 +8,7 @@ $id_student = $input['id_student'];
 
 // Update the query to join with the supervisors table
 $stmt = $con->prepare("
-   SELECT fd.* , s.name FROM `financial_disclosure` fd
+   SELECT fd.* , s.username FROM `financial_disclosure` fd
 JOIN `supervisors` s ON fd.id_supervisor = s.id
 WHERE id_student = $id_student;
 ");

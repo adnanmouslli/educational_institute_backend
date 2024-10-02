@@ -16,9 +16,7 @@ foreach($listIdSubjects as $id_sub) {
 
     $stmt = $con ->prepare("INSERT INTO `registration_records`(`id`, `id_student`, `id_subject`) 
                             VALUES (null , '$id_student' , '$id_sub')");
-    
-    $stmt ->execute() ;
-
+    $stmt ->execute() ;   
 }
 $count  = $stmt ->rowCount() ;
 result($count) ;

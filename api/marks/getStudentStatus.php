@@ -8,17 +8,12 @@ include "../../lib/functions.php" ;
 
 $id_student = $input['id_student'];
 
-
 $stmt = $con->prepare("
-    SELECT m.mark,m.date, m.type , sub.name AS subject_name, sp.username AS supervisor_name
-    FROM marks m
-    INNER JOIN subject sub ON m.id_subject = sub.id
-    INNER JOIN supervisors sp ON m.id_supervisor = sp.id
-    WHERE m.id_student = $id_student
+   SELECT type , AVG(mark) as 'avg_mark' , count(*) as 'count' FROM `marks` WHERE id_student = '$id_student' and enable = 1
+    GROUP BY type
 ");
-
 $stmt->execute();
-$count  = $stmt -> rowCount() ;
+$count  = $stmt -> rowCount();
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if ($count > 0) {
