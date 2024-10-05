@@ -57,7 +57,6 @@ def predict_score():
         'quiz_to_midterm_difference': midterm - quiz_avg,
         'midterm_to_final_difference': predicted_score - midterm,
         
-
     }
 
     # تحديد التحسن أو التراجع
@@ -78,4 +77,4 @@ def predict_score():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

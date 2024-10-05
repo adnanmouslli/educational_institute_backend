@@ -29,8 +29,8 @@ $count = $stmt -> rowCount() ;
 
 if($count > 0) {
 
-    printFailure("Time is busy") ;
-       
+    printFailure("Time is busy");
+                                                    
 }
 else {
             $stmt = $con ->prepare("INSERT INTO `subject_dates`(`id`, `id_subject_teacher`, `day`, `hour`) 

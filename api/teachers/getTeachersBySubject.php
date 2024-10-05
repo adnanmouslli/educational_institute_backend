@@ -1,19 +1,16 @@
 <?php
 
 include "../../database/connect.php";
-include "../../lib/getJsonData.php";
 include "../../lib/functions.php";
+include "../../lib/getJsonData.php" ;
 
-$id_student = $input['id_student'];
+$id_sub = $input['id_sub'];
 
-// Update the query to join with the supervisors table
 $stmt = $con->prepare("
-    SELECT alerts.*, supervisors.username 
-    FROM alerts 
-    LEFT JOIN supervisors ON alerts.id_supervisor = supervisors.id 
-    WHERE alerts.id_student = '$id_student';
+SELECT t.* FROM `subject-teachers`  st
+JOIN `teachers` t on st.id_teacher = t.id
+WHERE st.id_subject = '$id_sub' 
 ");
-
 $stmt->execute();
 $count = $stmt->rowCount();
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);

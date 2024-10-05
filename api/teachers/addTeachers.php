@@ -8,11 +8,17 @@ include "../../lib/functions.php" ;
 
 
 $name = $input['name'];
+$specialization = $input['specialization'];
+$address = $input['address'];
+$phone = $input['phone'];
+$class = $input['class'];
+
 $subjects = $input['subjects']; // for example: $subject = "1,2,,7" ; رقم المادة وبعدو رمز الصف تبع هل مادة  
 
 $arr_subjects = explode("," , $subjects) ;
 
-$stmt = $con ->prepare("INSERT INTO `teachers`(`id`, `name`) VALUES (null , '$name')") ;
+$stmt = $con ->prepare("INSERT INTO `teachers`(`id`, `name`, `specialization`, `address`, `phone`, `class`) 
+                VALUES (null , '$name',  '$specialization' , '$address' , '$phone' , '$class')") ;
 $stmt ->execute() ;
 $count  = $stmt ->rowCount() ;
 $id_teacher = $con -> lastInsertId() ;
