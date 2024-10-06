@@ -23,34 +23,63 @@ if($count > 0) {
 }
 else {
             $stmt = $con ->prepare("
-                SELECT * FROM `section-teacher` 
-                                WHERE id_subject_teachers in (SELECT id FROM `subject-teachers` 
-								        WHERE id_subject in (SELECT id_subject FROM `subject-teachers`
-         						    			WHERE id_subject = (select id_subject from `subject-teachers` WHERE id = '$id_subject_teacher')))     
-                                     ") ;
-            $stmt ->execute();
-            
-            $count = $stmt -> rowCount() ;
-            
-            if($count > 0) {
+           SELECT * 
+                FROM `subject_dates` sd1
+                WHERE sd1.id_subject_teacher = '$id_subject_teacher' 
+                AND EXISTS (
+                    SELECT 1
+                    FROM `section-teacher` st 
+                    JOIN `subject_dates` sd ON st.id_subject_teachers = sd.id_subject_teacher
+                    WHERE st.id_section = '$id_section' 
+                    AND sd1.day = sd.day 
+                    AND sd1.hour = sd.hour
+                                                    );
+                ") ;
+        $stmt ->execute();
 
-                printFailure("هذه المادة يتم تدريسها بالفعل في هذه الشعبة !!");
-                                                                
-            }
-            else{
-                $stmt = $con ->prepare("INSERT INTO `section-teacher`(`id`, `id_section`, `id_subject_teachers`) 
-                VALUES (null , '$id_section' , '$id_subject_teacher')") ;
-            $stmt ->execute();
-            $count  = $stmt ->rowCount();
+        $count = $stmt -> rowCount() ;
 
-            if($count > 0){
-                printSuccess() ;
-            }
-            else {
-                printFailure() ;
-            }
+        if($count > 0) {
 
-            }
+            printFailure("لا يمكن أن يدرس هذا الاستاذ بهذه الشعبة نظرا لوجود تعارض في الأوقات مع غير أستاذ!!");
+                                                            
+        }
+        else {
+            $stmt = $con ->prepare("
+            SELECT * FROM `section-teacher` 
+                            WHERE id_subject_teachers in (SELECT id FROM `subject-teachers` 
+                                    WHERE id_subject in (SELECT id_subject FROM `subject-teachers`
+                                             WHERE id_subject = (select id_subject from `subject-teachers` WHERE id = '$id_subject_teacher')))     
+                                 ") ;
+        $stmt ->execute();
+        
+        $count = $stmt -> rowCount() ;
+        
+        if($count > 0) {
+
+            printFailure("هذه المادة يتم تدريسها بالفعل في هذه الشعبة !!");
+                                                            
+        }
+        else{
+            $stmt = $con ->prepare("INSERT INTO `section-teacher`(`id`, `id_section`, `id_subject_teachers`) 
+            VALUES (null , '$id_section' , '$id_subject_teacher')") ;
+        $stmt ->execute();
+        $count  = $stmt ->rowCount();
+
+        if($count > 0){
+            printSuccess() ;
+        }
+        else {
+            printFailure() ;
+        }
+
+        }
+
+        }
+
+
+
+           
 
            
 }
